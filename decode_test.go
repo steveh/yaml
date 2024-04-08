@@ -761,6 +761,22 @@ var unmarshalTests = []struct {
 		M{"ñoño": "very yes 🟔"},
 	},
 
+	// UTF-16 surrogate pair.
+	{
+		`"\ud83e\udd23"`,
+		"🤣",
+	},
+	// UTF-16 multiple surrogate pairs.
+	{
+		`"\uD83D\uDE00\uD83D\uDE01"`,
+		"😀😁",
+	},
+	// UTF-16 non-surrogate pair character in between.
+	{
+		`"\uD83D\uDE00a\uD83D\uDE01"`,
+		"😀a😁",
+	},
+
 	// This *is* in fact a float number, per the spec. #171 was a mistake.
 	{
 		"a: 123456e1\n",
